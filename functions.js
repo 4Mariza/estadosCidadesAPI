@@ -72,11 +72,49 @@ const getCapitalPais = () => {
     const capitaisArray = []
 
     estadosCidades.estados.forEach(function(estado){
-        //capital diferente de undefined testar
+        if(estado.capital_pais != undefined){
+            let dadosEstadosCapitais = {}
+
+            dadosEstadosCapitais.capital_atual = estado.capital_pais.capital
+            dadosEstadosCapitais.uf = estado.sigla
+            dadosEstadosCapitais.descricao = estado.nome
+            dadosEstadosCapitais.capital = estado.capital
+            dadosEstadosCapitais.regiao = estado.regiao
+            dadosEstadosCapitais.capital_pais_ano_inicio = estado.capital_pais.ano_inicio
+            dadosEstadosCapitais.capital_pais_ano_termino = estado.capital_pais.ano_fim
+
+            capitaisArray.push(dadosEstadosCapitais)
+        }
     })
+
+    capitaisJSON.capitais = capitaisArray
+    return capitaisJSON
+}
+
+const getCidade = (sigla) => {
+    const infoEstado = {}
+    const cidadesArray = []
+
+    estadosCidades.estados.forEach(function(estado){
+        if(sigla.toUpperCase() == estado.sigla){
+
+            infoEstado.uf = estado.sigla
+            infoEstado.descricao = estado.nome
+            infoEstado.quantidade_cidades = estado.cidades.length
+        
+        estado.cidades.forEach(function(cidadesUf){
+            cidadesArray.push(cidadesUf.nome)
+        })
+        infoEstado.cidades = cidadesArray
+    }
+    })
+
+    return infoEstado
 }
 
 // console.log(getListaDeEstados())
 // console.log(getDadosEstado('RJ'))
 // console.log(getCapitalEstado('AL'))
 // console.log(getEstadoRegiao('Sudeste'));
+// console.log(getCapitalPais());
+// console.log(getCidade('AC'));
