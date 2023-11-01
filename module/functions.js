@@ -1,4 +1,4 @@
-var api = require('./module/estados_cidades')
+var api = require('./estados_cidades')
  
 var estadosCidades = api.estadosCidades
 
@@ -112,9 +112,18 @@ const getCidade = (sigla) => {
     return infoEstado
 }
 
-// console.log(getListaDeEstados())
-// console.log(getDadosEstado('RJ'))
-// console.log(getCapitalEstado('AL'))
-// console.log(getEstadoRegiao('Sudeste'));
-// console.log(getCapitalPais());
-// console.log(getCidade('AC'));
+module.exports = {
+    getListaDeEstados,
+    getCidade,
+    getCapitalEstado,
+    getCapitalPais,
+    getEstadoRegiao,
+    getDadosEstado
+}
+
+console.log(getListaDeEstados())
+console.log(getDadosEstado('SP'))
+console.log(getCapitalEstado('AL'))
+console.log(getEstadoRegiao('Sul'));
+console.log(getCapitalPais());
+console.log(getCidade('AC'));
