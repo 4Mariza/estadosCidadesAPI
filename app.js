@@ -31,8 +31,93 @@ app.get('/estados/sigla', cors(), async function(request, response, next){
     let controleEstadosCidades = require('./module/functions')
     let listaEstados = controleEstadosCidades.getListaDeEstados()
 
-    response.json(listaEstados)
-    response.status(200)
+    if (listaEstados){
+        response.json(listaEstados)
+        response.status(200)
+    } else {
+        response.status(404)
+        response.json({erro: 'Item não encontrado'})
+    }
+})
+
+app.get('/estado/sigla/:uf', cors(), async function(request, response, next){
+
+   let siglaEstado = request.params.uf
+
+   let controleDadosEstado = require('./module/functions')
+   let dadosEstado = controleDadosEstado.getDadosEstado(siglaEstado)
+
+   if (dadosEstado){
+       response.json(dadosEstado)
+       response.status(200)
+   } else {
+       response.status(404)
+       response.json({erro: 'Item não encontrado'})
+   }
+})
+
+//usando outra forma de pegar o valor da sigla; via query
+app.get('/estado/capital', cors(), async function(request, response, next){
+
+    //http://localhost:8080/estado/capital?uf=CE <--- fica assim
+    let siglaEstado = request.query.uf
+
+    let controleCapitalEstado = require('./module/functions')
+    let capitalEstado = controleCapitalEstado.getCapitalEstado(siglaEstado)
+
+    if (capitalEstado){
+        response.json(capitalEstado)
+        response.status(200)
+    } else {
+        response.status(404)
+        response.json({erro: 'Item não encontrado'})
+    }
+})
+
+app.get('/regiao/estados/:regiao', cors(), async function(request, response, next){
+
+    let regiaoPais = request.params.regiao
+
+    let controleEstadosRegiao = require('./module/functions')
+    let estadosRegiao = controleEstadosRegiao.getEstadoRegiao(regiaoPais)
+
+    if (estadosRegiao){
+        response.json(estadosRegiao)
+        response.status(200)
+    } else {
+        response.status(404)
+        response.json({erro: 'Item não encontrado'})
+    }
+})
+
+app.get('/pais/capitais', cors(), async function(request, response, next){
+
+    let controleCapitais = require('./module/functions')
+    let capitaisPais = controleCapitais.getCapitalPais()
+
+    if (capitaisPais){
+        response.json(capitaisPais)
+        response.status(200)
+    } else {
+        response.status(404)
+        response.json({erro: 'Item não encontrado'})
+    }
+})
+
+app.get('/estado/cidades/sigla/:uf', cors(), async function(request, response, next){
+
+    let siglaEstado = request.params.uf
+
+    let controleCidades = require('./module/functions')
+    let cidadesEstado =  controleCidades.getCidade(siglaEstado)
+
+    if (cidadesEstado){
+        response.json(cidadesEstado)
+        response.status(200)
+    } else {
+        response.status(404)
+        response.json({erro: 'Item não encontrado'})
+    }    
 })
 
 app.listen('8080', function(){
